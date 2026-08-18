@@ -7,6 +7,8 @@ assignees: AmazinDooD
 
 ---
 
+- [ ] i confirm that i did not use chat jippity or any other artificial intelligence tool to create this issue.
+
 **ERM i found a bug**
 gimme a lil description of the bug,, k thx
 
