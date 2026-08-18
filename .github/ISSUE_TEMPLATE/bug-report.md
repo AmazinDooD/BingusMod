@@ -2,12 +2,12 @@
 name: Bug Report
 about: report a bug,,, like the name says
 title: "[BUG] "
-labels: ''
+labels: erm thats a bug
 assignees: AmazinDooD
 
 ---
 
-- [ ] i confirm that i did not use chat jippity or any other artificial intelligence tool to create this issue.
+- [ ] i confirm that i did not use chat jippity or any other artificial intelligence tool to create this issue. (put a lowercase x in between the square brackets)
 
 **ERM i found a bug**
 gimme a lil description of the bug,, k thx
