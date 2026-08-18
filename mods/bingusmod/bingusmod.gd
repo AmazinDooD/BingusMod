@@ -1,6 +1,11 @@
 @icon("res://assetsNEW/graphics/editor/erm.png")
 class_name BingusMod extends Node
 
+const _a = &"hi! this is my first mod so if im doing something horribly wrong please tell me :3"
+const _b = &"(i probably am lmao,,) anyways, enjoy my code :P (or don't)"
+
+@onready var newPopup = preload("res://assetsNEW/scenes/objects/misc/score_popup.tscn")
+
 const MOD_ID = "amazindood.bingusmod"
 const RECENT_FILES_PATH = "user://mod_data/"+MOD_ID+".recentLevels.json"
 const CONFIG_PATH = "user://mod_data/configs/"+MOD_ID+".json"
@@ -50,7 +55,7 @@ const TOOLTIPS: = { # Relative to levelEditor/HUD/
 			"frame":		"For animated images, the starting frame of the image.",
 			"collision":	"Whether the player will collide with the decoration or not."
 		},
-		# hotkeysTab has literally nothing lmao,
+		# hotkeysTab has literally nothing lmao
 		"customTab": {
 			"songName": 	"When the Song option is set to Custom, this option is the name of\nthe custom song, including its file extension.",
 			"tiles": 		"Specifies a filepath to a tile set to use for normal tiles.",
@@ -61,7 +66,8 @@ const TOOLTIPS: = { # Relative to levelEditor/HUD/
 			"tiles6": 		"Specifies a filepath to a tile set to use for dog tiles.",
 			"modifiers":	"A list of playthrough modifies to use for this level.\nEntries should be separated by commas.",
 			"bpm":			"When the Song option is set to Custom, specifies the BPM of your custom song.\nThe icon in the pause menu dances at this tempo.",
-			"reload":		"Reloads each tile set using each filepath that is set above."
+			"reload":		"Reloads each tile set using each filepath that is set above.",
+			"levelScript": 	"The path to this level's custom script."
 		}
 	},
 	"TopTab": {
@@ -84,12 +90,10 @@ const TOOLTIPS: = { # Relative to levelEditor/HUD/
 @onready var conf = load_config()
 @onready var recentLevels: Array = load_recent_levels()
 
-const _a = &"hi! this is my first mod so if im doing something horribly wrong please tell me :3"
-const _b = &"(i probably am lmao,,) anyways, enjoy my code :P (or don't)"
-
 static func message(message: String):
 	print("[BingusMod] ", message)
 
+## Loads a .json file from a path and parses it.
 static func load_json(path) -> Variant:
 	var file = FileAccess.open(path, FileAccess.READ)
 	return JSON.parse_string(file.get_as_text())

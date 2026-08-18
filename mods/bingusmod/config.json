@@ -51,5 +51,17 @@
 		"name": "Playtest zooming",
 		"description": "Allows zooming the screen while playtesting a level in the editor.",
 		"default": true
+	},
+	
+	
+	"h_advanced": {
+		"name": "Advanced / Experimental",
+		"description": "Stuff that's either fairly advanced or currently in development.",
+		"header": 1,
+	},
+	"level_scripts": {
+		"name": "Level Scripts",
+		"description": "ONLY USE THIS WITH LEVELS YOU TRUST! Allows levels to run custom code.",
+		"default": false
 	}
 }
