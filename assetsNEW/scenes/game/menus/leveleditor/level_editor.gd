@@ -82,8 +82,8 @@ var hideSidebarArrow: Button = null
 var openingFile: bool = false
 var sidebarIsOffset: bool = false
 
-# PATCH: open recent button
-func bm_editor_initial_menu():
+# PATCH: setup UI
+func bm_editor_on_load():
 	BingusMod.recentLevels = BingusMod.load_recent_levels()
 	if bconf.open_recent_button:
 		if openRecentButton == null:
@@ -154,6 +154,23 @@ func bm_editor_initial_menu():
 		$HUD.add_child(hideSidebarArrow)
 		BingusMod.message("added sidebar arrow wo w  !")
 	
+	if bconf.level_scripts:
+		# Make the modifiers input slightly smaller to allow us to add our input
+		var modifiersInput = $HUD / tabs / customTab / modifiers
+		modifiersInput.size.y = 22.0
+		modifiersInput.position.y += 20
+		
+		var levelScriptPath := LineEdit.new()
+		levelScriptPath.set_placeholder("Level Script path")
+		levelScriptPath.set_name(&"levelScript")
+		levelScriptPath.set_theme(editorTheme)
+		levelScriptPath.position = Vector2i(16, 304)
+		
+		$HUD / tabs / customTab.add_child(levelScriptPath)
+		# for some reason i have to do this to set its size ?? idfk
+		$HUD / tabs / customTab / levelScript.size = Vector2i(224, 22)
+	
+	# ALWAYS DO THIS LAST!
 	if bconf.help_tooltips:
 		add_tooltips("HUD/", BingusMod.TOOLTIPS)
 	
@@ -193,8 +210,8 @@ func _on_hide_sidebar_pressed() -> void:
 	sidebarIsOffset = !sidebarIsOffset
 
 func _ready() -> void :
-	# PATCH: add open recent button
-	bm_editor_initial_menu()
+	# PATCH: add UI
+	bm_editor_on_load()
 	$pickOption.show()
 	for i in objectScenes:
 		loadedObjectScenes.append(load(i.object))
@@ -744,7 +761,9 @@ func saveto(path: String, returnString: bool = false):
 		"switch3customtiles": $HUD / tabs / customTab / tiles4.text, 
 		"switch4customtiles": $HUD / tabs / customTab / tiles5.text, 
 		"dogcustomtiles": $HUD / tabs / customTab / tiles6.text, 
-		"mods": $HUD / tabs / customTab / modifiers.text
+		"mods": $HUD / tabs / customTab / modifiers.text,
+		# PATCH: level scripts
+		"levelScript": $HUD / tabs / customTab / levelScript.text,
 	}
 	for i in get_tree().get_nodes_in_group("editorObject"):
 		if i is not editorDeco:
@@ -778,6 +797,7 @@ func saveto(path: String, returnString: bool = false):
 func save(path: String, loadFromString: String = ""):
 	levelPath = path
 	$pickOption.hide()
+	# PATCH: add file to recents when opening it
 	if openingFile:
 		BingusMod.add_recent_level(path, bconf)
 		openingFile = false
@@ -882,6 +902,9 @@ func save(path: String, loadFromString: String = ""):
 			$HUD / tabs / customTab / tiles6.text = saveData.dogcustomtiles
 		if "mods" in saveData:
 			$HUD / tabs / customTab / modifiers.text = saveData.mods
+		# PATCH: level scripts
+		if bconf.level_scripts == true && "levelScript" in saveData:
+			$HUD / tabs / customTab / levelScript.text = saveData.levelScript
 		reloadCustomTiles()
 		reloadCustom()
 		var obj: = 1
@@ -1015,7 +1038,7 @@ func _on_clear_pressed() -> void :
 	$HUD / TopTab / clear.text = "CONFIRM " + str(clearPresses) + "/3"
 	if clearPresses == 4:
 		# PATCH: add open recent button
-		bm_editor_initial_menu()
+		bm_editor_on_load()
 		$pickOption.show()
 		for i in tileLayers:
 			i.clear()

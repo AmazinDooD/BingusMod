@@ -306,6 +306,30 @@ func loadLevel():
 				res.remove_at(0)
 				d.polygon.polygon = res
 				d.deco = int(i[6])
+	# PATCH: run level script
+	if "levelScript" in saveData:
+		var file = levelPath.get_base_dir().path_join(saveData.levelScript)
+		if FileAccess.file_exists(file):
+			var levelfile = path.get_file()
+			if bconf.level_scripts:
+				var ThisLevelScript = ResourceLoader.load(file, "GDScript", ResourceLoader.CACHE_MODE_IGNORE) as GDScript
+				
+				if !ThisLevelScript:
+					push_error("couldn't load level "+levelfile+"'s script")
+				else:
+					var instance = ThisLevelScript.new() as LevelScript
+
+					if !instance:
+						push_error(levelfile+"'s script doesn't extend LevelScript")
+					else:
+						instance.set_name("levelScript")
+						add_child(instance)
+						print("level "+levelfile+" has run a script")
+			else:
+				print("level "+levelfile+" has a script, but scripts are disabled")
+		else:
+			print_rich("[BingusMod] [color=red]That script's NOTHING! Go fuck yourself![/color]")
+	
 	var rmods = Modifiers.new()
 	for i in mods.split(","):
 		if rmods.mods.has(i.replace(" ", "").to_lower()):
