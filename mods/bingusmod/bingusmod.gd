@@ -4,6 +4,8 @@ class_name BingusMod extends Node
 const _a = &"hi! this is my first mod so if im doing something horribly wrong please tell me :3"
 const _b = &"(i probably am lmao,,) anyways, enjoy my code :P (or don't)"
 
+var conf
+@onready var recentLevels: Array = load_recent_levels()
 @onready var newPopup = preload("res://assetsNEW/scenes/objects/misc/score_popup.tscn")
 
 const MOD_ID = "amazindood.bingusmod"
@@ -87,9 +89,6 @@ const TOOLTIPS: = { # Relative to levelEditor/HUD/
 	"hideSidebar": "Hides the panel on the left side of the editor.",
 }
 
-@onready var conf = load_config()
-@onready var recentLevels: Array = load_recent_levels()
-
 static func message(message: String):
 	print("[BingusMod] ", message)
 
@@ -103,8 +102,6 @@ static func load_config() -> Variant:
 	return load_json(CONFIG_PATH)
 
 func save_recent_levels(conf = null) -> void:
-	if conf == null: conf = load_config()
-
 	var levelsToSave: Array[String] = []
 	for i in int(conf.num_recent_levels):
 		if recentLevels.size() > i:
@@ -121,25 +118,24 @@ func load_recent_levels() -> Array:
 		message("recent files json doesnt exist, creating it :P")
 		FileAccess.open(RECENT_FILES_PATH, FileAccess.WRITE).store_string("[]")
 		return []
+	
 	message("loading recent files json")
 	return load_json(RECENT_FILES_PATH)
 
 func add_recent_level(path: String, conf = null) -> void:
 	if recentLevels.has(path):
 		recentLevels.erase(path)
-	if conf == null: conf = load_config()
 
 	recentLevels.push_back(path)
 
 	if recentLevels.size() > int(conf.num_recent_levels):
 		for i in recentLevels.size() - int(conf.num_recent_levels):
 			recentLevels.remove_at(-1)
+	
 	message("new level opened!")
 	save_recent_levels(conf)
 
 static func pan_key_down(conf = null) -> bool:
-	if conf == null: conf = load_config()
-	
 	if conf.ctrl_to_pan:
 		return Input.is_action_pressed("shift") || Input.is_action_pressed("ctrl")
 	else:
@@ -150,3 +146,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	message("guess what ,,,    the mod just loaded !! woa! !")
+
+func _on_coolermods_config_saved(mod: ModLoader.Mod, data: Dictionary):
+	if mod.id == MOD_ID:
+		conf = data
