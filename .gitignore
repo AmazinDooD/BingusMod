@@ -1,0 +1,12 @@
+# Godot
+/.godot/
+/android/
+*.translation
+*.tmp
+~*
+
+# Mono
+/.mono/
+/data_*/
+mono_crash.*.json
+mono_crash.*.blob

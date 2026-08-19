@@ -1,0 +1,67 @@
+{
+	"h_main_editor": {
+		"name": "Main Editor",
+		"description": "Stuff that affects the main part of the editor.",
+		"header": 1
+	},
+	"ctrl_to_pan": {
+		"name": "CTRL to pan",
+		"description": "Allows using the CTRL key to pan the level editor, like shift.",
+		"default": true
+	},
+	"open_recent_button": {
+		"name": "Open Recent button",
+		"description": "Adds a button to the editor menu that opens a recent file.",
+		"default": true
+	},
+	"num_recent_levels": {
+		"name": "Amount of recent levels to save",
+		"description": "Saves the last X opened levels as recently opened.",
+		"default": 5,
+		"type_hint": {
+			"id": "slider",
+			"min": 3,
+			"max": 10,
+			"step": 1
+		}
+	},
+	"hide_sidebar_arrow": {
+		"name": "Hide sidebar button",
+		"description": "Adds a button to the editor menu that hides the sidebar.",
+		"default": true,
+	},
+	"help_tooltips": {
+		"name": "Help tooltips",
+		"description": "Adds tooltips to parts of the editor to help explain what they do.",
+		"default": false
+	},
+
+
+	"h_playtest": {
+		"name": "Playtest",
+		"description": "Stuff that affects the playtesting mode of the editor.",
+		"header": 1
+	},
+	"playtest_panning": {
+		"name": "Playtest panning",
+		"description": "Allows panning the screen while playtesting a level in the editor.",
+		"default": true
+	},
+	"playtest_zooming": {
+		"name": "Playtest zooming",
+		"description": "Allows zooming the screen while playtesting a level in the editor.",
+		"default": true
+	},
+	
+	
+	"h_advanced": {
+		"name": "Advanced / Experimental",
+		"description": "Stuff that's either fairly advanced or currently in development.",
+		"header": 1,
+	},
+	"level_scripts": {
+		"name": "Level Scripts",
+		"description": "ONLY USE THIS WITH LEVELS YOU TRUST! Allows levels to run custom code.",
+		"default": false
+	}
+}

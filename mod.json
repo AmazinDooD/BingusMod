@@ -1,0 +1,11 @@
+{
+	"id": "amazindood.bingusmod",
+	"version": "0.0.5",
+	"name": "BingusMod",
+	"author": "AmazinDooD (@amazindood._. on discord)",
+	"description": "Various Level Editor Improvements :P",
+	"mod_script": "res://mods/bingusmod/bingusmod.gd",
+	"dependencies": [
+		"justsomejello.coolermods"
+	]
+}
